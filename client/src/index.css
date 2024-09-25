@@ -19,11 +19,11 @@ html, body {
     --primary: #F8FAFC;
     --secondary: #0F172A;
     --txt: #000;
-    --heading: #2dd9fe;
+    --heading: #fe2d7a;
     --btn-color: #fff;
-    --btn-background: #5f99be;
+    --btn-background: #be5fa1;
     --search-background: #000;
-    --c: #2dd9fe;
+    --c: #fe2d7a;
     --hover_bg_change: backdrop-filter:6px;
 }
 
@@ -32,9 +32,9 @@ html, body {
     --primary: rgb(30,41,59);
     --secondary: #D5DDF0;
     --txt: #fff;
-    --heading: #4666FF;
+    --heading: #d146ff;
     --btn-color: #000;
-    --btn-background: #5f99be;
+    --btn-background: #be5fa1;
     --search-background: #18181b;
 }
 
