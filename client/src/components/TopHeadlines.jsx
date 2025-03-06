@@ -18,7 +18,7 @@ function TopHeadlines() {
     setError(null);
 
     const categoryParam = category ? `&category=${category}` : "";
-    fetch(`http://localhost:3000/top-headlines?language=en${categoryParam}&page=${page}&pageSize=${pageSize}`)
+    fetch(`https://newsapp-backend-ayu.onrender.com/top-headlines?language=en${categoryParam}&page=${page}&pageSize=${pageSize}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
