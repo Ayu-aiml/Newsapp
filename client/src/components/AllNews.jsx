@@ -9,25 +9,18 @@ function AllNews() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  function handlePrev() {
-    setPage(page - 1);
-  }
-
-  function handleNext() {
-    setPage(page + 1);
-  }
-
-  let pageSize = 12;
+  const pageSize = 12;
 
   useEffect(() => {
     setIsLoading(true);
     setError(null);
-    fetch(`https://news-aggregator-dusky.vercel.app/all-news?page=${page}&pageSize=${pageSize}`)
+
+    fetch(`http://localhost:3000/all-news?page=${page}&pageSize=${pageSize}`)
       .then(response => {
-        if (response.ok) {
-          return response.json();
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
         }
-        throw new Error('Network response was not ok');
+        return response.json();
       })
       .then(myJson => {
         if (myJson.success) {
@@ -41,18 +34,17 @@ function AllNews() {
         console.error('Fetch error:', error);
         setError('Failed to fetch news. Please try again later.');
       })
-      .finally(() => {
-        setIsLoading(false);
-      });
+      .finally(() => setIsLoading(false));
   }, [page]);
 
   return (
     <>
       {error && <div className="text-red-500 mb-4">{error}</div>}
 
-      <div className='my-10 cards grid lg:place-content-center md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 xs:grid-cols-1 xs:gap-4 md:gap-10 lg:gap-14 md:px-16 xs:p-3 '>
-        {!isLoading ? data.map((element, index) => (
+      <div className="my-10 cards grid lg:place-content-center md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 xs:grid-cols-1 xs:gap-4 md:gap-10 lg:gap-14 md:px-16 xs:p-3">
+        {isLoading ? <Loader /> : data.map(element => (
           <EverythingCard
+            key={element.url} // ✅ index की जगह unique key
             title={element.title}
             description={element.description}
             imgUrl={element.urlToImage}
@@ -60,15 +52,15 @@ function AllNews() {
             url={element.url}
             author={element.author}
             source={element.source.name}
-            key={index}
           />
-        )) : <Loader />}
+        ))}
       </div>
+
       {!isLoading && data.length > 0 && (
         <div className="pagination flex justify-center gap-14 my-10 items-center">
-          <button disabled={page <= 1} className='pagination-btn text-center' onClick={handlePrev}>&larr; Prev</button>
-          <p className='font-semibold opacity-80'>{page} of {Math.ceil(totalResults / pageSize)}</p>
-          <button className='pagination-btn text-center' disabled={page >= Math.ceil(totalResults / pageSize)} onClick={handleNext}>Next &rarr;</button>
+          <button disabled={page <= 1} className="pagination-btn text-center" onClick={() => setPage(page - 1)}>&larr; Prev</button>
+          <p className="font-semibold opacity-80">{page} of {Math.ceil(totalResults / pageSize)}</p>
+          <button className="pagination-btn text-center" disabled={page >= Math.ceil(totalResults / pageSize)} onClick={() => setPage(page + 1)}>Next &rarr;</button>
         </div>
       )}
     </>

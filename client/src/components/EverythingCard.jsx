@@ -2,81 +2,55 @@ import React from "react";
 
 function Card(props) {
   return (
-    <div className="everything-card mt-10">
-      <div className="everything-card flex flex-wrap p-5 gap-1 mb-1">
-        <b className="title">{props.title}</b>
-        <div className="everything-card-img mx-auto">
-          <img className="everything-card-img" src={props.imgUrl} alt="img" />
+    <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-300">
+      {/* Image Section */}
+      {props.imgUrl && (
+        <div className="relative">
+          <img className="w-full h-64 object-cover" src={props.imgUrl} alt="News" />
+          <div className="absolute bottom-0 bg-black bg-opacity-50 text-white text-sm px-3 py-1">
+            {props.source}
+          </div>
         </div>
-        <div className="description">
-          <p className="description-text leading-7">
-            {props.description?.substring(0, 200)}
-          </p>
+      )}
+
+      {/* Content Section */}
+      <div className="p-6">
+        <h2 className="text-2xl font-semibold text-gray-900 hover:text-blue-600 transition-colors">
+          {props.title}
+        </h2>
+
+        {/* Description */}
+        <p className="mt-3 text-gray-700 text-sm leading-relaxed">
+          {props.description?.substring(0, 200)}...
+        </p>
+
+        {/* Info Section */}
+        <div className="mt-4 text-sm text-gray-500 flex flex-wrap gap-3">
+          {props.author && (
+            <p>
+              <span className="font-medium text-gray-800">Author:</span> {props.author}
+            </p>
+          )}
+          {props.publishedAt && (
+            <p>
+              <span className="font-medium text-gray-800">Published:</span> {new Date(props.publishedAt).toDateString()}
+            </p>
+          )}
         </div>
-        <div className="info">
-          <div className="source-info flex items-center gap-2">
-            <span className="font-semibold">Source:</span>
+
+        {/* Read More Button */}
+        {props.url && (
+          <div className="mt-5">
             <a
               href={props.url}
               target="_blank"
-              className="link underline break-words"
+              rel="noopener noreferrer"
+              className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
             >
-              {props.source.substring(0, 70)}
+              Read More
             </a>
           </div>
-          <div className="origin flex flex-col">
-            <p className="origin-item">
-              <span className="font-semibold">Author:</span>
-              {props.author}
-            </p>
-            <p className="origin-item">
-              <span className="font-semibold">Published At:</span>
-              ({props.publishedAt})
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* Added the new card content with styles */}
-      <div className="flex lg:flex-row">
-        <div
-          className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
-          style={{ backgroundImage: `url(${props.imageUrlLeft})` }}
-          title={props.imageLeftTitle}
-        ></div>
-        <div className="border rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
-          <div className="mb-8">
-            <p className="text-sm text-gray-600 flex items-center">
-              {props.memberIcon && (
-                <svg
-                  className="fill-current text-gray-500 w-3 h-3 mr-2"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 20 20"
-                >
-                  {props.memberIcon}
-                </svg>
-              )}
-              {props.memberText}
-            </p>
-            <div className="text-gray-900 font-bold text-xl mb-2">
-              {props.cardTitle}
-            </div>
-            <p className="text-gray-700 text-base">{props.cardDescription}</p>
-          </div>
-          <div className="flex items-center">
-            {props.authorImage && (
-              <img
-                className="w-10 h-10 rounded-full mr-4"
-                src={props.authorImage}
-                alt="Avatar"
-              />
-            )}
-            <div className="text-sm">
-              <p className="text-gray-900 leading-none">{props.authorName}</p>
-              <p className="text-gray-600">{props.publishedDate}</p>
-            </div>
-          </div>
-        </div>
+        )}
       </div>
     </div>
   );
