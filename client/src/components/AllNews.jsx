@@ -15,7 +15,7 @@ function AllNews() {
     setIsLoading(true);
     setError(null);
 
-    fetch(`http://localhost:3000/all-news?page=${page}&pageSize=${pageSize}`)
+    fetch(`https://newsapp-backend-ayu.onrender.com/all-news?page=${page}&pageSize=${pageSize}`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
