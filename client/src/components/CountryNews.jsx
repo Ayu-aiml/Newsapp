@@ -23,7 +23,7 @@ function CountryNews() {
     setIsLoading(true);
     setError(null);
 
-    fetch(`http://localhost:3000/country/${iso}?page=${page}&pageSize=${pageSize}`)
+    fetch(`https://newsapp-backend-ayu.onrender.com/country/${iso}?page=${page}&pageSize=${pageSize}`)
       .then((response) => {
         if (!response.ok) throw new Error("Network response was not ok");
         return response.json();
